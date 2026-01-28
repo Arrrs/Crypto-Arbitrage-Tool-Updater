@@ -1,0 +1,1 @@
+Golang arbitrage helping tool to get data from exchanges and update db with actual values and triggering calculations updates.  
