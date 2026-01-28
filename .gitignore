@@ -1,0 +1,24 @@
+# Environment
+.env
+.env.local
+.env.*
+
+# Claude Code
+.claude/
+
+# Binary
+arbToolDBUpdater
+*.exe
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Go
+vendor/
