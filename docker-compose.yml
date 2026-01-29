@@ -13,33 +13,3 @@ services:
 networks:
   arbtool-network:
     external: true
-
-
-
-
-
-# arb-updater  | 
-# arb-updater  | [GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
-# arb-updater  |  - using env:    export GIN_MODE=release
-# arb-updater  |  - using code:   gin.SetMode(gin.ReleaseMode)
-# arb-updater  | 
-# arb-updater  | [GIN-debug] GET    /                         --> Updater/api.SetupRouter.func1 (4 handlers)
-# arb-updater  | [GIN-debug] GET    /diffs                    --> Updater/api.SetupRouter.func2 (4 handlers)
-# arb-updater  | [GIN-debug] GET    /diffsFutures             --> Updater/api.SetupRouter.func3 (4 handlers)
-# arb-updater  | [GIN-debug] GET    /pairs                    --> Updater/api.SetupRouter.func4 (4 handlers)
-# arb-updater  | [GIN-debug] GET    /pairsFutures             --> Updater/api.SetupRouter.func5 (4 handlers)
-# arb-updater  | [GIN-debug] POST   /recreateTables           --> Updater/api.SetupRouter.func6 (4 handlers)
-# arb-updater  | [GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
-# arb-updater  | Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
-# arb-updater  | [GIN-debug] Listening and serving HTTP on :8082
-
-# arb-updater  | 2026/01/29 15:52:03 Error executing SQL query: pq: deadlock detected
-# arb-updater  | 2026/01/29 15:52:03 Error executing SQL job: pq: deadlock detected
-# arb-updater  | 2026/01/29 15:52:19 Error executing SQL query: pq: deadlock detected
-# arb-updater  | 2026/01/29 15:52:19 Error executing SQL job: pq: deadlock detected
-# arb-updater  | 2026/01/29 15:52:36 Error executing SQL query: pq: deadlock detected
-# arb-updater  | 2026/01/29 15:52:36 Error executing SQL job: pq: deadlock detected
-# arb-updater  | 2026/01/29 15:52:56 Error executing SQL query: pq: deadlock detected
-# arb-updater  | 2026/01/29 15:52:56 Error executing SQL job: pq: deadlock detected
-# arb-updater  | 2026/01/29 15:53:13 Error executing SQL query: pq: deadlock detected
-# arb-updater  | 2026/01/29 15:53:13 Error executing SQL job: pq: deadlock detected
