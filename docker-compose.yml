@@ -4,10 +4,10 @@ services:
     container_name: arb-updater
     restart: unless-stopped
     env_file:
-      - .env  # Create this file on server (not in git)
+      - .env
     networks:
-      - arbtool-network  # Change to your existing network name
+      - arbtool-network
 
 networks:
-  app-network:
-    external: true  # Use your existing network
+  arbtool-network:
+    external: true
