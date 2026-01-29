@@ -174,8 +174,8 @@ func main() {
 	// Start API server in a separate goroutine
 	go func() {
 		router := api.SetupRouter(dbConn)
-		log.Println("Starting API server on :8080")
-		if err := router.Run(":8080"); err != nil {
+		log.Printf("Starting API server on %s", cfg.APIPort)
+		if err := router.Run(cfg.APIPort); err != nil {
 			log.Fatalf("API server error: %v", err)
 		}
 	}()

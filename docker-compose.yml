@@ -1,0 +1,13 @@
+services:
+  arb-updater:
+    build: .
+    container_name: arb-updater
+    restart: unless-stopped
+    env_file:
+      - .env  # Create this file on server (not in git)
+    networks:
+      - app-network  # Change to your existing network name
+
+networks:
+  app-network:
+    external: true  # Use your existing network
