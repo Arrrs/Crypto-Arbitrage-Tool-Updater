@@ -1,9 +1,9 @@
 package main
 
 import (
-	// "fmt"
 	"log"
 	"os"
+	"sync"
 	"time"
 
 	"Updater/api"
@@ -121,11 +121,17 @@ func main() {
 		}
 	}
 
+	// Mutex to prevent diff jobs from running simultaneously (avoids deadlocks)
+	var diffMutex sync.Mutex
+
 	updateDiffsSqlJob, err := s.NewJob(
 		gocron.DurationJob(10*time.Second),
 		gocron.NewTask(
 			func() {
-				query, err := db.LoadSQLFromFile("db/queries/updateDiffs.sql") // Читаємо SQL із файлу
+				diffMutex.Lock()
+				defer diffMutex.Unlock()
+
+				query, err := db.LoadSQLFromFile("db/queries/updateDiffs.sql")
 				if err != nil {
 					log.Println("Error loading SQL file:", err)
 					return
@@ -133,9 +139,7 @@ func main() {
 
 				err = db.ExecuteSQL(dbConn, query)
 				if err != nil {
-					log.Println("Error executing SQL job:", err)
-				} else {
-					// log.Println("SQL job (updateDiffs) executed successfully.")
+					log.Println("Error executing SQL job (updateDiffs):", err)
 				}
 			},
 		),
@@ -144,11 +148,15 @@ func main() {
 		log.Fatalf("Error scheduling SQL job: %v", err)
 	}
 	log.Println("SQL job created (updateDiffs) with ID:", updateDiffsSqlJob.ID())
+
 	updateDiffsFuturesSqlJob, err := s.NewJob(
 		gocron.DurationJob(10*time.Second),
 		gocron.NewTask(
 			func() {
-				query, err := db.LoadSQLFromFile("db/queries/updateDiffsFutures.sql") // Читаємо SQL із файлу
+				diffMutex.Lock()
+				defer diffMutex.Unlock()
+
+				query, err := db.LoadSQLFromFile("db/queries/updateDiffsFutures.sql")
 				if err != nil {
 					log.Println("Error loading SQL file:", err)
 					return
@@ -156,9 +164,7 @@ func main() {
 
 				err = db.ExecuteSQL(dbConn, query)
 				if err != nil {
-					log.Println("Error executing SQL job:", err)
-				} else {
-					// log.Println("SQL job (updateDiffs) executed successfully.")
+					log.Println("Error executing SQL job (updateDiffsFutures):", err)
 				}
 			},
 		),
@@ -166,7 +172,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("Error scheduling SQL job: %v", err)
 	}
-	log.Println("SQL job created (updateDiffs) with ID:", updateDiffsFuturesSqlJob.ID())
+	log.Println("SQL job created (updateDiffsFutures) with ID:", updateDiffsFuturesSqlJob.ID())
 
 	// Start scheduler
 	s.Start()

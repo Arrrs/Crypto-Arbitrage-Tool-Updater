@@ -10,18 +10,17 @@ import (
 
 // ExecuteSQL виконує переданий SQL-запит з retry при deadlock
 func ExecuteSQL(db *sql.DB, query string) error {
-	maxRetries := 3
+	maxRetries := 5
 	for i := 0; i < maxRetries; i++ {
 		_, err := db.Exec(query)
 		if err == nil {
 			return nil
 		}
 
-		// Check if it's a deadlock error
+		// Check if it's a deadlock error - retry with exponential backoff
 		if strings.Contains(err.Error(), "deadlock") {
 			if i < maxRetries-1 {
-				// Wait a bit and retry
-				time.Sleep(time.Duration(100*(i+1)) * time.Millisecond)
+				time.Sleep(time.Duration(200*(i+1)) * time.Millisecond)
 				continue
 			}
 		}
