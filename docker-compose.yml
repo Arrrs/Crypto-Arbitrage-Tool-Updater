@@ -6,7 +6,7 @@ services:
     env_file:
       - .env  # Create this file on server (not in git)
     networks:
-      - app-network  # Change to your existing network name
+      - arbtool-network  # Change to your existing network name
 
 networks:
   app-network:
