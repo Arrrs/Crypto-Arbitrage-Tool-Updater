@@ -25,18 +25,24 @@ func SetupRouter(db *sql.DB) *gin.Engine {
 		AllowCredentials: true,
 	}))
 
-	router.GET("/", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{"message": "Crypto Updater API is running!"})
-	})
-
-	router.GET("/api/health", func(c *gin.Context) {
+	healthHandler := func(c *gin.Context) {
 		err := db.Ping()
 		if err != nil {
 			c.JSON(http.StatusServiceUnavailable, gin.H{"status": "unhealthy", "db": "disconnected"})
 			return
 		}
 		c.JSON(http.StatusOK, gin.H{"status": "healthy", "db": "connected"})
+	}
+
+	router.GET("/", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{"message": "Crypto Updater API is running!"})
 	})
+	router.HEAD("/", func(c *gin.Context) {
+		c.Status(http.StatusOK)
+	})
+
+	router.GET("/api/health", healthHandler)
+	router.HEAD("/api/health", healthHandler)
 
 	router.GET("/diffs", func(c *gin.Context) {
 		// Отримуємо параметри запиту
