@@ -29,6 +29,15 @@ func SetupRouter(db *sql.DB) *gin.Engine {
 		c.JSON(http.StatusOK, gin.H{"message": "Crypto Updater API is running!"})
 	})
 
+	router.GET("/api/health", func(c *gin.Context) {
+		err := db.Ping()
+		if err != nil {
+			c.JSON(http.StatusServiceUnavailable, gin.H{"status": "unhealthy", "db": "disconnected"})
+			return
+		}
+		c.JSON(http.StatusOK, gin.H{"status": "healthy", "db": "connected"})
+	})
+
 	router.GET("/diffs", func(c *gin.Context) {
 		// Отримуємо параметри запиту
 		topRows := c.Query("topRows") // Якщо 0, то 500 за замовчуванням
