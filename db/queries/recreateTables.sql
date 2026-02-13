@@ -5,8 +5,7 @@ DROP TABLE IF EXISTS pairsfutures CASCADE;
 DROP TABLE IF EXISTS diffsfutures CASCADE;
 
 CREATE TABLE pairs (
-    id SERIAL PRIMARY KEY,
-    pairKey VARCHAR(50) UNIQUE NOT NULL,
+    pairKey VARCHAR(50) PRIMARY KEY,
     symbol VARCHAR(20) NOT NULL,
     exchange VARCHAR(20) NOT NULL,
     market VARCHAR(20) NOT NULL,
@@ -22,12 +21,10 @@ CREATE TABLE pairs (
 );
 
 CREATE INDEX symbol_idx ON pairs (symbol);
-CREATE INDEX pairKey_idx ON pairs (pairKey);
 CREATE INDEX exchange_market_idx ON pairs (exchange, market);
 
 CREATE TABLE diffs (
-    id SERIAL PRIMARY KEY,
-    pairKey VARCHAR(60) UNIQUE NOT NULL,
+    pairKey VARCHAR(60) PRIMARY KEY,
     symbol VARCHAR(20) NOT NULL,
     baseAsset VARCHAR(20) NOT NULL,
     quoteAsset VARCHAR(20) NOT NULL,
@@ -50,12 +47,10 @@ CREATE TABLE diffs (
 );
 
 CREATE INDEX diffs_symbol_idx ON diffs (symbol);
-CREATE INDEX diffs_pairKey_idx ON diffs (pairKey);
 CREATE INDEX diffs_differencePercentage_idx ON diffs (differencePercentage);
 
 CREATE TABLE nets (
-    id SERIAL PRIMARY KEY,
-    coinKey VARCHAR(100) UNIQUE NOT NULL,
+    coinKey VARCHAR(100) PRIMARY KEY,
     coin VARCHAR(50) NOT NULL,
     exchange VARCHAR(20) NOT NULL,
     network VARCHAR(50) NOT NULL,
@@ -70,8 +65,7 @@ CREATE INDEX nets_exchange_idx ON nets (exchange);
 CREATE INDEX nets_network_idx ON nets (network);
 
 CREATE TABLE pairsfutures (
-    id SERIAL PRIMARY KEY,
-    pairKey VARCHAR(50) UNIQUE NOT NULL,
+    pairKey VARCHAR(50) PRIMARY KEY,
     symbol VARCHAR(20) NOT NULL,
     exchange VARCHAR(20) NOT NULL,
     market VARCHAR(20) NOT NULL,
@@ -90,12 +84,10 @@ CREATE TABLE pairsfutures (
 );
 
 CREATE INDEX symbolFutures_idx ON pairsfutures (symbol);
-CREATE INDEX pairKeyFutures_idx ON pairsfutures (pairKey);
 CREATE INDEX exchange_market_futures_idx ON pairsfutures (exchange, market);
 
 CREATE TABLE diffsfutures (
-    id SERIAL PRIMARY KEY,
-    pairKey VARCHAR(60) UNIQUE NOT NULL,
+    pairKey VARCHAR(60) PRIMARY KEY,
     symbol VARCHAR(40) NOT NULL,
     baseAsset VARCHAR(20) NOT NULL,
     quoteAsset VARCHAR(20) NOT NULL,
@@ -126,4 +118,3 @@ CREATE TABLE diffsfutures (
 );
 
 CREATE INDEX diffs_symbol_futures_idx ON diffsfutures (symbol);
-CREATE INDEX diffs_pairKey_futures_idx ON diffsfutures (pairKey);
